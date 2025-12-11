@@ -63,11 +63,9 @@ void loop() {
       }
       delay(8);
     } else {
-      // Print received message to the console
       char s[48] = {0};
       snprintf(s, 47, "RX: [0x%02x][0x%02x][0x%02x][0x%02x][0x%02x][0x%02x][0x%02x]\n", rxBuffer[0],
                rxBuffer[1], rxBuffer[2], rxBuffer[3], rxBuffer[4], rxBuffer[5], rxBuffer[6]);
-      // Serial.println(s);
 
 
       btnMidLeft = (rxBuffer[1] & 0x17);
