@@ -11,11 +11,11 @@ class Controller {
     uint8_t rxBuffer[kMessageSize_B] = {};
     size_t numRxBytes = 0;
 
-    const int kJoystickMinimum = 0;
-    const int kJoystickMiddle = 127;
-    const int kJoystickMaximum = 254;
+    static constexpr int kJoystickMinimum = 0;
+    static constexpr int kJoystickMiddle = 127;
+    static constexpr int kJoystickMaximum = 254;
 
-    const int kJoystickDeadzone = 22;
+    static constexpr int kJoystickDeadzone = 22;
 
 
     SoftwareSerial BTserial;
@@ -23,9 +23,9 @@ class Controller {
 
     int8_t parseJoystickValue(const uint8_t aAxis) {
       if (aAxis <= kJoystickMiddle - kJoystickDeadzone) {
-        return map(aAxis, kJoystickMinimum, kJoystickMiddle + kJoystickDeadzone, -100, 0);
+        return map(aAxis, kJoystickMinimum, kJoystickMiddle - kJoystickDeadzone, -100, 0);
       } else if (aAxis >= kJoystickMiddle + kJoystickDeadzone) {
-        return map(aAxis, kJoystickMiddle + kJoystickDeadzone, kJoystickMaximum, 0, 100);
+        return map(aAxis, kJoystickMiddle - kJoystickDeadzone, kJoystickMaximum, 0, 100);
       } else {
         return 0;
       }
@@ -88,7 +88,7 @@ class Controller {
       joyLeftX = parseJoystickValue(rxBuffer[3]);
       joyLeftY = parseJoystickValue(rxBuffer[4]);
 
-      Serial.println(String(-joyLeftX) + ", " + String(joyLeftY));
+      // Serial.println(String(-joyLeftX) + ", " + String(joyLeftY));
 
 
       // Clear the message buffer to make room for the next message
