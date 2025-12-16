@@ -18,7 +18,7 @@ void loop() {
   controller.loop();
   drivetrain.drive();
   if (controller.btnRightRight) {
-    flappything.write(180);
+    flappything.write(70);
   } else {
     flappything.write(0);
   }
