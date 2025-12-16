@@ -25,29 +25,29 @@ class Drivetrain {
   }
 
 
-  void drive_with_controls() {
+  void drive() {
+
     float y = float(controller.joyLeftY)/100.0;
-    float x = -(float(controller.joyLeftX)/100.0);
-    float left = y + x;
-    float right = y - x;
-    Serial.println(String(x) + ", " + String(y));
+    float x = float(controller.joyLeftX)/100.0;
 
-    if (left > 0.0) {
-      analogWrite(Lwf, left * pwr);
-    } else if (left < 0.0) {
-      analogWrite(Lwb, abs(left) * pwr);
-    } else {     
-      analogWrite(Lwf, 0);
-      analogWrite(Lwb, 0);
-    }
+    analogWrite(Lwb, 0);
+    analogWrite(Rwb, 0);
+    analogWrite(Lwf, 0);
+    analogWrite(Rwf, 0);
 
-    if (right > 0.0) {
-      analogWrite(Rwf, right * pwr);
-    } else if (right < 0.0) {
-      analogWrite(Rwb, abs(right) * pwr);
-    } else {
-      analogWrite(Rwf, 0);
-      analogWrite(Rwb, 0);
+    if (x > 0.4) {
+      analogWrite(Lwb, pwr * abs(x));
+      analogWrite(Rwf, pwr * abs(x));
+    } else if (x < -0.4) {
+      analogWrite(Lwf, pwr * abs(x));
+      analogWrite(Rwb, pwr * abs(x));
+      
+    } else if (y > 0) {
+      analogWrite(Lwf, pwr * abs(y));
+      analogWrite(Rwf, pwr * abs(y));
+    } else if (y < 0) {
+      analogWrite(Lwb, pwr * abs(y));
+      analogWrite(Rwb, pwr * abs(y));
     }
   }
 };

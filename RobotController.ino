@@ -1,17 +1,26 @@
 #include "controller.hpp"
 #include "drivetrain.hpp"
+#include <Servo.h>
 
 
-Controller controller(10, 9);
+
+Servo flappything;
+Controller controller(A1);
 Drivetrain drivetrain(controller, 3, 5, 6, 11);
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("wassup");
-  controller.controller_setup();
+  controller.setup();
+  flappything.attach(10);
 }
 
 void loop() {
-  controller.controller_loop();
-  drivetrain.drive_with_controls();
+  controller.loop();
+  drivetrain.drive();
+  if (controller.btnRightRight) {
+    flappything.write(180);
+  } else {
+    flappything.write(0);
+  }
 }
+

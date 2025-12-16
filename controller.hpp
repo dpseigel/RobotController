@@ -46,13 +46,13 @@ class Controller {
     int8_t joyLeftX;
     int8_t joyLeftY;
 
-    Controller(int rx, int tx) : BTserial(rx, tx) {} 
+    Controller(int rx) : BTserial(rx, A0) {} 
 
-    void controller_setup() {
+    void setup() {
       BTserial.begin(9600);
     }
 
-    void controller_loop() {
+    void loop() {
       if (numRxBytes != kMessageSize_B) {
         while (BTserial.available() > 0) {
           uint8_t rxByte = BTserial.read();
