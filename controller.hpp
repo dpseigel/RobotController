@@ -6,21 +6,25 @@
 class Controller {
 
   private:
-
+    //amount of packages the controller sends
     static constexpr size_t kMessageSize_B = 7;
+    //a buffer to store each one every frame
     uint8_t rxBuffer[kMessageSize_B] = {};
+    //Number count for the buffer
     size_t numRxBytes = 0;
-
+    
+    //joystick variables for controller
     static constexpr int kJoystickMinimum = 0;
     static constexpr int kJoystickMiddle = 127;
     static constexpr int kJoystickMaximum = 254;
 
+    //deadzone
     static constexpr int kJoystickDeadzone = 22;
 
-
+    //Specific serial channel for  bluetooth
     SoftwareSerial BTserial;
 
-
+    //changing the joystick input from controller to readable values.
     int8_t parseJoystickValue(const uint8_t aAxis) {
       if (aAxis <= kJoystickMiddle - kJoystickDeadzone) {
         return map(aAxis, kJoystickMinimum, kJoystickMiddle - kJoystickDeadzone, -100, 0);
@@ -32,7 +36,7 @@ class Controller {
     }
     
   public:
-
+    //button variables
     boolean btnMidLeft;
     boolean btnMidRight;
     boolean joyLeftBtn;
@@ -42,15 +46,13 @@ class Controller {
     boolean btnRightDown;
     boolean btnRightLeft;
 
-
+    //X and Y variables for joystick
     int8_t joyLeftX;
     int8_t joyLeftY;
 
-    Controller(int rx) : BTserial(rx, A0) {} 
-
-    void setup() {
+    Controller(int rx) : BTserial(rx, A0) {
       BTserial.begin(9600);
-    }
+    } 
 
     void loop() {
       if (numRxBytes != kMessageSize_B) {
