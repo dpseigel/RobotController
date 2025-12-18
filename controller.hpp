@@ -78,8 +78,8 @@ class Controller {
              rxBuffer[1], rxBuffer[2], rxBuffer[3], rxBuffer[4], rxBuffer[5], rxBuffer[6]);
 
 
-      btnMidLeft = (rxBuffer[1] & 0x17);
-      btnMidRight = (rxBuffer[1] & 0x10);
+      btnMidLeft = (rxBuffer[1] & 0x04);
+      btnMidRight = (rxBuffer[1] & 0x08);
       joyLeftBtn = (rxBuffer[1] & 0x20);
 
       btnRightUp = (rxBuffer[2] & 0x10);
